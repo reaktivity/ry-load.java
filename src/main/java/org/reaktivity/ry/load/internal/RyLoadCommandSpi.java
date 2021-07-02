@@ -13,15 +13,19 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-module org.reaktivity.ry.load
+package org.reaktivity.ry.load.internal;
+
+import org.reaktivity.ry.RyCommandSpi;
+import org.reaktivity.ry.load.internal.command.RyLoadCommand;
+
+import com.github.rvesse.airline.builder.CliBuilder;
+
+public final class RyLoadCommandSpi implements RyCommandSpi
 {
-    requires org.reaktivity.ry;
-
-    requires transitive org.agrona.core;
-
-    opens org.reaktivity.ry.load.internal.command
-       to com.github.rvesse.airline;
-
-    provides org.reaktivity.ry.RyCommandSpi
-        with org.reaktivity.ry.load.internal.RyLoadCommandSpi;
+    @Override
+    public void mixin(
+        CliBuilder<Runnable> builder)
+    {
+        builder.withCommand(RyLoadCommand.class);
+    }
 }
